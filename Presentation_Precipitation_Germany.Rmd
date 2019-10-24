@@ -1,6 +1,6 @@
 ---
-title: "Precipitation Germany"
-author: "Annika"
+title: "Introducktion: Precipitation in Germany"
+author: "Annika Ludwig"
 date: "24 10 2019"
 output: ioslides_presentation
 ---
@@ -9,27 +9,44 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Precipitation 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+Precipitation is any liquid or frozen water that forms in the atmosphere and falls to the Earth. It is **one of the three main steps of the global water cycle.**
 
-## Slide with Bullets
+Precipitation is any liquid or frozen water that forms in the atmosphere and falls back to the Earth.  
+It comes in many forms, like rain,sleet,and snow.   
+Along with evaporation and condensation, precipitation  
+is one of the three major parts of the global water cycle. 
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
 
-## Slide with R Output
+Source <https://www.nationalgeographic.org/encyclopedia/precipitation/>
 
-```{r cars, echo = TRUE}
-summary(cars)
+## Precipitation 
+
+![](https://upload.wikimedia.org/wikipedia/commons/c/c1/Precipitation_by_type.png)
+
+
+## Precipitation in Germany
+
+```{r , echo = FALSE, warning=FALSE, message=FALSE}
+
+library(raster)
+
+germany <- getData("GADM", country="DEU", level=2)
+prec <- getData("worldclim", var="prec", res=.5,lon=10,lat=51)
+prec_ger1 <- crop(prec,germany)
+
+prec_ger2 <- mask(prec_ger1, germany)
+prev_avg <- cellStats(prec_ger2, stat="mean")
+
+plot(prev_avg, pch=19,cex=2, col="#00ff0060")
+
 ```
 
-## Slide with Plot
+## Summary Precipitation
 
-```{r pressure}
-plot(pressure)
+```{r}
+summary(prev_avg)
 ```
 
