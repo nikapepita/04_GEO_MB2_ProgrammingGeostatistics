@@ -2,7 +2,7 @@
 title: "Introducktion: Precipitation in Germany"
 author: "Annika Ludwig"
 date: "24 10 2019"
-output: ioslides_presentation
+output: beamer_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -27,26 +27,4 @@ Source <https://www.nationalgeographic.org/encyclopedia/precipitation/>
 ![](https://upload.wikimedia.org/wikipedia/commons/c/c1/Precipitation_by_type.png)
 
 
-## Precipitation in Germany
-
-```{r , echo = FALSE, warning=FALSE, message=FALSE}
-
-library(raster)
-
-germany <- getData("GADM", country="DEU", level=2)
-prec <- getData("worldclim", var="prec", res=.5,lon=10,lat=51)
-prec_ger1 <- crop(prec,germany)
-
-prec_ger2 <- mask(prec_ger1, germany)
-prev_avg <- cellStats(prec_ger2, stat="mean")
-
-plot(prev_avg, pch=19,cex=2, col="#00ff0060")
-
-```
-
-## Summary Precipitation
-
-```{r}
-summary(prev_avg)
-```
 
