@@ -103,3 +103,6 @@ df[,c("plot","measure1","measure2")]
 
 df[c(-1),c("plot","measure1","measure2")]
 df[c(2:5),c("plot","measure1","measure2")]
+df[c(66:70),c("measure1","measure2")]
+
+##List
