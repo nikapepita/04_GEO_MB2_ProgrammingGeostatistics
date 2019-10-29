@@ -38,7 +38,7 @@ pch=19,
 #magnify symbols and text
 cex=2,
 # green or  html code with tranxlucency (60\%)
-col="#00ff0060"
+col="#00ff0060")
 
 # a smoothed line connecting the point 
 lines(lowess(prev_avg, f=.2))
