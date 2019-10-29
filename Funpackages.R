@@ -14,3 +14,5 @@ library(devtools)
 devtools::install_github("gaborcsadri/praise")
 library(praise)
 praise()
+
+difftime("2019-12-24",Sys.Date(),units="days")
