@@ -8,6 +8,11 @@ for (i in 1:length(8)) {
   print(paste("It's your turn,", volunteer)) 
 }
 
+for (i in 1:10) {
+  volunteer<-sample(Eagle2019,1)
+  print(paste("It's your turn,", volunteer)) 
+}
+
 
 ####Script MArius
 
