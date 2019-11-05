@@ -3,12 +3,18 @@ install.packages("RCurl")
 # get Data from GitHub from another User e.g. Martin df <- read.csv("https://raw.githubusercontent.com/
 
 #download file from https://github.com/wegmann/R_data repository
+
+df <- read.csv('./')#with that command you start on your getwd, with tab you can choose folders or files
+
 df <- read.csv("sample_points_all_data_subset_withNames.csv")
 
 #alternativ import - acess online
 library(RCurl)
 df <- read.csv("https://raw.githubusercontent.com/wegmann/R_data/master/Steigerwald_sample_points_all_data_subset_withNames.csv")
 #other package: tidyverse
+
+#write table
+write.table(df,file="my_data.txt")
 
 #Check File df, head, tail, summary, plot, str, names, dim, 
 #class, levels
@@ -146,7 +152,7 @@ a <- list(obj_1=runif(100), obj_2=c("aa","bb"), obj_3=c(1,2,4))
 #call the object name
 a$obj_1
 #or
-a[["obj_1"]]4
+a[["obj_1"]]
 #or
 a[[1]]
 
@@ -155,3 +161,48 @@ a <- list(m1=matrix(runif(50), nrow=5), v1=c(1,6,10), df1=data.frame(a=runif(100
 
 #index a data frame or matrix as know
 a$df[,1]
+
+#plot measure 1 and measure 2
+
+plot(df$measure1,df$measure2)
+boxplot(df$measure1,df$measure2)
+hist(df$measure1)
+
+ggplot(df$measure1)
+
+plot(df[c(1:10),c("measure1","measure12")])
+coplot(df[c(1),c("measure1","measure2")])
+
+plot(df[c(1:100),c("measure1","measure2")],
+     #pointtype
+     pch=19,
+     #magnify symbols and text
+     cex=2,
+     # green or  html code with tranxlucency (60\%)
+     col="#00ff0060")
+
+df[df$value>3.0,] #index by column values
+
+df[df$value>3.2 | df$measure1>50,] #combine with AND or OR
+df[df$value>3.2 & df$measure1>50,] #combine with AND or OR
+
+df$new_col <- df$measure1*df$measure2 #new column
+
+df[grep("b",df$ID,ignore.case=T),] #you can use wildcards, index data by keyword
+
+
+x1 <- rbinom(10,size=1,prob=0.5)
+x2 <- factor(x1,labels=c("yes","no"))
+
+summary(x2)
+levels(x2)
+
+as.character(x)
+
+library(car)
+recode(x2,"'yes'='sure';'no'='maybe'")
+
+ifelse(x2=="no","maybe","sure") #!! ==!!
+
+
+
