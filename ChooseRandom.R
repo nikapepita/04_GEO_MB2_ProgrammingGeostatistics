@@ -1,38 +1,47 @@
-Eagle2019 <- c("Annika","Helena","Larissa","Luisa","Jakob","Marius","James","Nils","Kevin","Kemeng","Diego", "Chris",
-               "Sofia","Antonio","Waldi","Sanaz")
-length(Eagle2019)
+##Choose Random Person 
 
-for (i in 1:length(8)) {
-  volunteer<-sample(Eagle2019,1)
-  #Eagle2019 <-Eagle2019 [Eagle2019  != volunteer]
-  print(paste("It's your turn,", volunteer)) 
-}
-
-for (i in 1:10) {
-  volunteer<-sample(Eagle2019,1)
-  print(paste("It's your turn,", volunteer)) 
-}
-
-
-####Script MArius
+#Create Dataframe with all Course-Members
 
 library(datapasta)
 library(ggplot2)
 
+#Choose a RandomPerson
+Eagle2019 <- data.frame(stringsAsFactors=FALSE,
+                 Name = c("Marius", "Annika", "Jakob", "Kemeng", "Helena", "James",
+                          "Kevin", "Diego", "Antonio", "Nils", "Luisa", "Larissa",
+                          "Christabel", "Walid", "Sofia", "Diana", "Chris", "Sanaz"),
+                 Id = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)
+)
 
-# a <-sample(1:length(df$Id), 1000000, replace = T)
-# hist(a)
-
-# Randomizer, Input dataframe column names needed: Id, Name 
-
-randomPerson <- function(data, print = T){
-  rNumVector <- seq(1,length(data$Id),1)
-  rNum <- rNumVector[sample(1:length(rNumVector),1)]
-  Name <- data[rNum,"Name"]
+random <- function(df, print = T){
+  volunteer <-sample(df$Id, 1, replace = T)
+  Name <- df[volunteer,"Name"]
   return(Name)
 }
 
-# Function to check for uniform distribution after n repeats 
+random(Eagle2019)
+
+#Check Distribution
+
+distribution <- function(df,rePeat, print = T){
+  Factors <- as.factor(replicate(rePeat, random(df)))
+  freq <- table(Factors)
+  
+  #Greyscale: Attention: you need to add fill in aes to add scale_fill
+  plot_dist1 <- ggplot(data.frame(Factors), aes(x = Factors,fill=Factors)) + geom_bar() +
+    geom_hline(yintercept = mean(freq)) +theme_minimal()+ scale_fill_grey()
+  
+  #Rainbow-Fill
+  plot_dist2 <- ggplot(data.frame(Factors), aes(x = Factors,fill=Factors)) + geom_bar() +
+    geom_hline(yintercept = mean(freq)) +theme_minimal()
+  return(plot_dist1)
+}
+
+
+distribution(Eagle2019,1000)
+##Question: Distribution, changes?!?!
+
+#### Copy Marius 
 
 distribution <- function(data, NRep, print = T){
   Factors <- as.factor(replicate(NRep, randomPerson(data)))
@@ -44,15 +53,18 @@ distribution <- function(data, NRep, print = T){
 }
 
 
-##################################################################################################################
-
-df <- data.frame(stringsAsFactors=FALSE,
-                 Name = c("Marius", "Annika", "Jakob", "Kemeng", "Helena", "James",
-                          "Kevin", "Diego", "Antonio", "Nils", "Luisa", "Larissa",
-                          "Christabel", "Walid", "Sofia", "Diana", "Chris", "Sanaz"),
-                 Id = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)
-)
 
 
-distribution(df, 5000)    # the strong law of large numbers dictates that in an random experiment, the sample average will 
-randomPerson(df)          # converge to the expected value for a large amount of repeats.
+
+
+
+
+
+
+
+
+
+
+
+
+
