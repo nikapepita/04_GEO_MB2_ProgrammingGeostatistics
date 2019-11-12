@@ -28,7 +28,9 @@ df[,length(df)-2]
 #select all columns, but first 10 rows
 df[1:10,]
 #select column LUCAS_LC, SRTM
+
 df[c("LUCAS_LC","SRTM")]
+y <- df[grep("L8.savi", names(df),ignore.case=T),] #you can use wildcards, index data by keyword
 
 df [,c(2,13)]
 ##Plot Stuff
@@ -41,7 +43,10 @@ subset(df$SRTM, df$L8.ndvi<0.44)
 
 #Indexing Dataframe by different rules
 # df[rule, access]
-c <- df[df$SRTM>10 & df$LCname=="cropland", "L8.ndvi"]
+c <- as.data.frame(df[df$SRTM>10 & df$LCname=="cropland", "L8.ndvi"])
+names(c) <- c("l8.ndvi")
+
+# Change 
 c <- df[df$SRTM>10 & df$LCname=="cropland", "L8.ndvi"]
 c <- data.frame(df[df$L8.ndvi>0.5,1:45])
 
