@@ -30,7 +30,7 @@ df[1:10,]
 #select column LUCAS_LC, SRTM
 
 df[c("LUCAS_LC","SRTM")]
-y <- df[grep("L8.savi", names(df),ignore.case=T),] #you can use wildcards, index data by keyword
+y <- df[grep("cropland", df$LCname,ignore.case=T),] #you can use wildcards, index data by keyword
 
 df [,c(2,13)]
 ##Plot Stuff
@@ -131,3 +131,18 @@ r3 <- raster(nrows=10, ncols=10)
 #fill raster
 r3[] <- rnorm(100) ##Without brackets you create a vector!!!
 plot(r3)
+
+###Raster Indexing
+
+#return first band
+r12[[1]]
+
+#or
+r12$layer.1
+
+#plot first band
+plot((r12[[1]]))
+
+#copy second and third band to a new object
+y <- r12[[2:3]]
+
