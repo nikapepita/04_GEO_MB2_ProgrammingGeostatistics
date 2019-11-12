@@ -41,6 +41,21 @@ distribution <- function(df,rePeat, print = T){
 distribution(Eagle2019,1000)
 ##Question: Distribution, changes?!?!
 
+
+### Repeat and Replicate:
+
+#repeat loop
+sum <- 0
+
+repeat{
+  sum = sum+1
+  if (sum == 10){
+    print("repeat loop ends");
+    break
+  }
+}
+
+
 #### Copy Marius 
 
 distribution <- function(data, NRep, print = T){
