@@ -54,3 +54,7 @@ library(suncalc)
 getSunlightTimes(date=Sys.Date(),lat=49.782332, lon=9.970187, tz="CET")
 
 
+##Check out - Lego Style Picture
+
+install.packages("rwhatsapp")
+
