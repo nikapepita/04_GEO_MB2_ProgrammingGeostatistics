@@ -1,5 +1,5 @@
 ###my own plots 
-
+##open task-add srtm -> terrain profil?
 ###
 library(plyr)
 library(ggplot2)
@@ -8,7 +8,7 @@ library(scales)
 
 
 getwd()
-setwd("./04_GEO_MB2_ProgrammingGeostatistics/")
+setwd("C:/Users/Annika/Documents/Git/04_GEO_MB2_ProgrammingGeostatistics")
 
 hiking_db <- read.csv("LandUseRoutes.csv", header=TRUE, sep=",")
 corine_classes <- read.csv("Corine.csv", header=TRUE, sep=",")
@@ -16,7 +16,7 @@ corine_classes <- read.csv("Corine.csv", header=TRUE, sep=",")
 
 
 Route_Name <- c("Wildpark")
-Route <- count( hiking_db[grep(Route_Name,hiking_db$name,ignore.case=T),], vars = "class", wt_var = NULL))
+Route <- count( hiking_db[grep(Route_Name,hiking_db$name,ignore.case=T),], vars = "class", wt_var = NULL)
 
 Route$name <- Route_Name
 Route$precentage <- as.integer((Route$freq*100)/sum(Route$freq))
