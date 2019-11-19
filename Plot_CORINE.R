@@ -21,6 +21,8 @@ Route <- count( hiking_db[grep(Route_Name[2],hiking_db$name,ignore.case=T),], va
 Route$name <- Route_Name[2]
 Route$precentage <- as.integer((Route$freq*100)/sum(Route$freq))
 Route
+#write.table(Route,file="LandUse2.csv")
+
 
 
 plot2 <- ggplot(Route, aes(x=class, y=precentage))+
@@ -46,6 +48,15 @@ pie <- plot1 + coord_polar("y", start=0) +
 pie
 
 
+
+anim <- pie + 
+  transition_states(Route$precentage)
+
+anim
+
+
+
+
 plot1 <- ggplot(Route, aes(x="", y=precentage))+
   geom_bar(aes(fill = class), width = 0.5, stat = "identity")+
   facet_grid(.~name) +
@@ -56,5 +67,13 @@ pie <- plot1 + coord_polar("y", start=0)
 pie
 
 
+library(gganimate)
 
+hiking_db2 <- read.csv("LandUse2.csv", header=TRUE, sep=";")
+head(hiking_db2)
 
+plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,color='red'))+
+  geom_line(aes(y=Coniferous,color='blue')) + geom_line(aes(y=Urban,color='blue')) +
+  geom_line(aes(y=Mixed_forest,color='blue')) + geom_line(aes(y=Grassland,color='blue')) +
++ transition_reveal(Year)
+plot3
