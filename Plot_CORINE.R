@@ -74,10 +74,7 @@ library(gganimate)
 hiking_db2 <- read.csv("LandUse2.csv", header=TRUE, sep=";")
 head(hiking_db2)
 
-# + geom_line(aes(y=Urban,color='Y2')) +
-#  geom_line(aes(y=Mixed_forest,color='blue')) + geom_line(aes(y=Grassland,color='blue'))+
-#  +geom_dl(aes(label = label), method = list(dl.trans(x = x + .2), "last.points")) +
-#  geom_dl(aes(label = label), method = list(dl.trans(x = x - .2), "first.points")) 
+
 
 
 plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_point(aes(y=Broad.leaved,color='Broad leaved Forest',size=Name))+
@@ -88,6 +85,15 @@ plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_point(aes(y=Broad.leaved,col
   labs(color = 'Land Cover Class')
 
 plot3
+
+plot4 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,color='Broad leaved Forest',size=Name))+
+  geom_line(aes(y=Coniferous,color='Coniferous Forest',size=Name)) +
+  scale_color_manual(values = c(
+    'Broad leaved Forest' = 'green',
+    'Coniferous Forest' = 'blue')) +
+  labs(color = 'Land Cover Class')
+
+plot4
 
 
 anim2 <- plot3 + 

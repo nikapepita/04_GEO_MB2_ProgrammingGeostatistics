@@ -58,3 +58,19 @@ getSunlightTimes(date=Sys.Date(),lat=49.782332, lon=9.970187, tz="CET")
 
 install.packages("rwhatsapp")
 
+##more Fun - 26.11.2019 - sounds
+library(devtools)
+if(!require(devtools)) {intall.packages(devtools)}
+devtools::install_github("brooke-watson/BRRR")
+library(BRRR)
+
+skrrrahh("drummaboy")
+skrrrahh(41)
+
+sound <- function()
+  
+  
+for (i in1:3) {
+  skrrrahh(41)
+}
+
