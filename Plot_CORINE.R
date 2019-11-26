@@ -80,8 +80,8 @@ head(hiking_db2)
 #  geom_dl(aes(label = label), method = list(dl.trans(x = x - .2), "first.points")) 
 
 
-plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,color='Broad leaved Forest'))+
-  geom_line(aes(y=Coniferous,color='Coniferous Forest')) +
+plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_point(aes(y=Broad.leaved,color='Broad leaved Forest',size=Name))+
+  geom_point(aes(y=Coniferous,color='Coniferous Forest',size=Name)) +
   scale_color_manual(values = c(
     'Broad leaved Forest' = 'green',
     'Coniferous Forest' = 'blue')) +
@@ -94,3 +94,4 @@ anim2 <- plot3 +
   transition_reveal(Year)
 
 anim2
+anim_save("myplot2.gif")
