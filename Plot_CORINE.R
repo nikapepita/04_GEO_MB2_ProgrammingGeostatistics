@@ -54,6 +54,8 @@ anim <- pie +
 
 anim
 
+#save animation
+anim_save("myplot.gif")
 
 
 
@@ -78,8 +80,8 @@ head(hiking_db2)
 #  geom_dl(aes(label = label), method = list(dl.trans(x = x - .2), "first.points")) 
 
 
-plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,color='Broad.leaved'))+
-  geom_line(aes(y=Coniferous,color='Coniferous')) +
+plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,color='Broad leaved Forest'))+
+  geom_line(aes(y=Coniferous,color='Coniferous Forest')) +
   scale_color_manual(values = c(
     'Broad leaved Forest' = 'green',
     'Coniferous Forest' = 'blue')) +
@@ -88,7 +90,7 @@ plot3 <- ggplot(hiking_db2,aes(x=Year,y="")) + geom_line(aes(y=Broad.leaved,colo
 plot3
 
 
+anim2 <- plot3 + 
+  transition_reveal(Year)
 
-plot3
-+ transition_reveal(Year)
-plot3
+anim2
