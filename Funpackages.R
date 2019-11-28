@@ -67,10 +67,13 @@ library(BRRR)
 skrrrahh("drummaboy")
 skrrrahh(41)
 
-sound <- function()
-  
-  
-for (i in1:3) {
-  skrrrahh(41)
-}
+##Date and Time
+
+install.packages("lubridate")
+library("lubridate")
+
+today()
+
+Sys.time()
+
 
