@@ -45,7 +45,7 @@ someone_say_my_fortune <- function(){
 }
 
 someone_say_my_fortune()
-
+cedr
 #install.packages("suncalc")
 #install.packages("V8")
 library(V8)
@@ -75,5 +75,7 @@ library("lubridate")
 today()
 
 Sys.time()
+
+
 
 

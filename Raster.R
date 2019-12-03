@@ -119,6 +119,8 @@ r12$new <- r12[[1]]*r12[[2]]^2
 r12
 
 plot(r12)
+
+
 #Convert back to Dataframe
 df12 <- r12[]
 head(df12)
@@ -146,3 +148,5 @@ plot((r12[[1]]))
 #copy second and third band to a new object
 y <- r12[[2:3]]
 
+
+r
