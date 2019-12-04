@@ -1,4 +1,4 @@
-##Indices
+##Indices and Classification
 #install.packages("RStoolbox")
 library(RStoolbox)
 library(raster)
