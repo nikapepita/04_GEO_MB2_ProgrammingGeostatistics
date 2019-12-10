@@ -65,7 +65,7 @@ raster <- lsat[[1:3]]
 #raster data to data frame
 raster_df <- lsat[]
 
-#actual clustering
+#actual clustering - kmeans
 kmeans_out <- kmeans(raster_df, 12, iter.max = 100, nstart = 10)
 
 #copy raster
@@ -76,5 +76,5 @@ kmeans_raster [] <- kmeans_out$cluster
 plot(kmeans_raster)
 
 #unsupervised classification
-uc <- unsuperClass(lsat, nClasses=3)
+uc <- unsuperClass(lsat, nClasses=5)
 ggR(uc$map, forceCat= TRUE, geom_raster= TRUE)
