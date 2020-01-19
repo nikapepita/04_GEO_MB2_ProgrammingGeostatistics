@@ -23,13 +23,14 @@ td_11 <- readOGR("./data_book/vector_data/training_2011.shp")
 
 #Classification
 sc_88 <- superClass(Isat88, trainData=td_88, responseCol = "class_name", 
-model = "rf", tuneLength = 1, trainPartition = 0.7)
+                    model = "rf", tuneLength = 1, trainPartition = 0.7)
 
 sc_11 <- superClass(Isat88, trainData=td_11, responseCol = "class_name", 
-model = "rf", tuneLength = 1, trainPartition = 0.7)
+                    model = "rf", tuneLength = 1, trainPartition = 0.7)
 
-sc88x10 <- sc88$map*10
-sc88_11 <- sc88x10+sc11$map
+sc_88x10 <- sc_88$map*10
+sc_88_11 <- sc_88x10+sc_11$map
+
 
 ########################################################
 #multidate
@@ -40,12 +41,14 @@ Isat11 <- brick("./data_book/raster_data/final/p224r63_2011.gri")
 
 Isat88_11 <- stack(Isat88,Isat11)
 
-#traindata for each year
-td_88_11 <- readOGR("./data_book/polygon_shape_file_1988_2011.shp")
+#traindata change
+td_88_11 <- readOGR("./data_book/vector_data/change_classes_1988_2011.shp")
 
 #Classification
-sc_88_11 <- superClass(Isat88_11, trainData=td_88_11, responseCol = "class", 
-model = "rf", tuneLength = 1, trainPartition = 0.7)
+sc_88_11_md <- superClass(Isat88_11, trainData=td_88_11,  responseCol = "class", 
+                          model = "rf", tuneLength = 1, trainPartition = 0.1)
+
+plot(sc_88_11_md)
 
 ########################################################
 #Change vector Analysis
@@ -71,4 +74,65 @@ cvat_tc_88_11 <- rasterCVA(tc_88[[2:3]], tc_11[[2:3]])
 #Accurarcy
 ########################################################
 
-sc_88_11 <- sc_88_11$validation$performance$overall[1]
+Acc_sc_88_v1 <- sc_88$validation$performance$overall
+Acc_sc_11_v1 <- sc_11$validation$performance$overall
+
+Acc_sc_88_v2 <- getValidation(sc_88, metrics = "classwise")
+Acc_sc_11_v2 <- getValidation(sc_11, metrics = "classwise")
+
+########################################################
+#Plot
+########################################################
+p1 <- ggR(sc_88$map, geom_raster = T)+
+  scale_fill_manual(values = c("green1", "dimgrey", "dodgerblue2"))+
+  # , guide = F
+  labs(x="",y="")+
+  ggtitle("Land Cover 1988")+
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=15))+
+  theme(legend.title = element_text(size = 12, face = "bold"))+
+  theme(legend.text = element_text(size = 10))+
+  theme(axis.text.y = element_text(angle=90))+
+  xlab("")+
+  ylab("")
+
+
+
+p2 <- ggR(sc_11$map, geom_raster = T)+
+  scale_fill_manual(values = c("green1", "dimgrey", "dodgerblue2"))+
+  # , guide = F
+  labs(x="",y="")+
+  ggtitle("Land Cover 2011")+
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=15))+
+  theme(legend.title = element_text(size = 12, face = "bold"))+
+  theme(legend.text = element_text(size = 10))+
+  theme(axis.text.y = element_text(angle=90))+
+  xlab("")+
+  ylab("")
+
+
+df$class <- ifelse(df$value==11,"11 No Change",
+                   ifelse(df$value == 12, "12 Forest to No Forest",
+                          ifelse(df$value == 13, "13 Forest to Water",
+                                 ifelse(df$value == 21, "21 No Forest to Forest",
+                                        ifelse(df$values == 22, "22 No Change",
+                                               ifelse(df$value == 23, "23 Forest to Water",
+                                                      ifelse(df$value == 31, "31 Water to Forest",
+                                                             ifelse(df$value == 32, "32 Water to No Forest",
+                                                                    ifelse(df$value == 33, "33 No Change", "NA")))))))))
+p3 <- ggplot(df, aes(x,y,fill=class))+geom_raster()+
+  scale_fill_manual(values = c("red", "grey", "dodgerblue2","green"))+
+  labs(x="",y="",title = "Land Cover Change 1988 to 2011", 
+       subtitle = "Classes 22,23,31,32,33 do not occur", 
+       caption = "Annika Ludwig. ggplot2: Land Cover Change Analyse with SuperClass, 2020.")+
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=15))+
+  theme(legend.title = element_text(size = 12, face = "bold"))+
+  theme(legend.text = element_text(size = 8))+
+  theme(axis.text.y = element_text(angle=90))+
+  xlab("")+
+  ylab("")
+
+plot(p3)
+
+pdf("Land Cover Change 1988 & 2011.pdf", width = 14, height = 8)
+grid.arrange(p1, p2, p3, ncol=2)
+dev.off()
