@@ -1,4 +1,5 @@
-# ###########
+# Optimized
+############
 # download and display temperature and precipitation for Germany
 # created just for teaching purpose - not for scientific analysis! 100% accuracy not ensured
 # learning goal: download data, convert them, analyse spatio-temporal data and display them
