@@ -33,6 +33,26 @@ sc_88_11 <- sc_88x10+sc_11$map
 
 
 ########################################################
+#Accurarcy
+########################################################
+
+Acc_sc_88_v1 <- sc_88$validation$performance$overall
+Acc_sc_11_v1 <- sc_11$validation$performance$overall
+
+Acc_sc_88_v2 <- getValidation(sc_88, metrics = "classwise")
+Acc_sc_11_v2 <- getValidation(sc_11, metrics = "classwise")
+
+Acc_sc_88_v3 <- getValidation(sc_88, metrics = "overall")
+Acc_sc_88_v3 
+Acc_sc_11_v3 <- getValidation(sc_11, metrics = "overall")
+Acc_sc_11_v3
+
+Acc_sc_88_v4 <- getValidation(sc_88, metrics = "confmat")
+Acc_sc_88_v4
+Acc_sc_11_v4 <- getValidation(sc_11, metrics = "confmat")
+Acc_sc_11_v4
+
+########################################################
 #multidate
 ########################################################
 
@@ -46,9 +66,16 @@ td_88_11 <- readOGR("./data_book/vector_data/change_classes_1988_2011.shp")
 
 #Classification
 sc_88_11_md <- superClass(Isat88_11, trainData=td_88_11,  responseCol = "class", 
-                          model = "rf", tuneLength = 1, trainPartition = 0.1)
+                          model = "rf", tuneLength = 1, trainPartition = 0.7)
 
-plot(sc_88_11_md)
+plot(sc_88_11_md$map)
+#validateMap(sc_88_11_md$map)
+
+Acc_sc_88_11_md <- sc_88_11_md$validation$performance$overall
+
+Acc_sc_88_11_md_v2 <- getValidation(sc_88_11_md, metrics = "classwise")
+Acc_sc_88_11_md_v3 <- getValidation(sc_88_11_md, metrics = "overall")
+Acc_sc_88_11_md_v4 <- getValidation(sc_88_11_md, metrics = "confmat")
 
 ########################################################
 #Change vector Analysis
@@ -69,16 +96,6 @@ tc_11 <- tasseledCap(x11[[c(1:5,7)]], sat="Landsat5TM")
 
 #change vector analysis using wetness and greeness
 cvat_tc_88_11 <- rasterCVA(tc_88[[2:3]], tc_11[[2:3]])
-
-########################################################
-#Accurarcy
-########################################################
-
-Acc_sc_88_v1 <- sc_88$validation$performance$overall
-Acc_sc_11_v1 <- sc_11$validation$performance$overall
-
-Acc_sc_88_v2 <- getValidation(sc_88, metrics = "classwise")
-Acc_sc_11_v2 <- getValidation(sc_11, metrics = "classwise")
 
 ########################################################
 #Plot
